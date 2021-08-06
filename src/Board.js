@@ -1,8 +1,14 @@
+import React, { useState } from "react";
 function renderSquare(i) {
   return <Square value={i} />;
 }
 function Square(props) {
-  return <button className="square">{props.value}</button>;
+  const [mark, setMark] = useState(null);
+  return (
+    <button className="square" onClick={() => setMark("X")}>
+      {mark}
+    </button>
+  );
 }
 function Board() {
   const status = "Next player: X";
