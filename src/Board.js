@@ -1,17 +1,32 @@
 import React, { useState } from "react";
-function renderSquare(i) {
-  return <Square value={i} />;
-}
 function Square(props) {
-  const [mark, setMark] = useState(null);
   return (
-    <button className="square" onClick={() => setMark("X")}>
-      {mark}
+    <button
+      className="square"
+      onClick={() => {
+        props.onClick();
+      }}
+    >
+      {props.value}
     </button>
   );
 }
-function Board() {
-  const status = "Next player: X";
+
+export default function Board() {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setxIsNext]=useState(true);
+
+  function renderSquare(i) {
+    return <Square value={squares[i]} onClick={() => handleClick(i)} />;
+  }
+  function handleClick(i) {
+    const sq=[...squares];
+    sq[i]=xIsNext? 'X':'O';
+    setSquares(squares=> sq);
+    setxIsNext(!xIsNext);
+  }
+
+  const status = "Next player: "+(xIsNext? 'X':'O');
 
   return (
     <div>
@@ -34,5 +49,3 @@ function Board() {
     </div>
   );
 }
-
-export default Board;
